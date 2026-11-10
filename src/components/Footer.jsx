@@ -1,75 +1,59 @@
+import { Link } from 'react-router-dom'
 import './Footer.css'
 
 export default function Footer() {
-  const year = new Date().getFullYear()
-
   return (
     <footer className="footer">
-      <div className="container">
-        <div className="footer-top">
-          {/* Brand */}
-          <div className="footer-brand">
-            <div className="footer-logo">
-              <div className="brand-icon">🌿</div>
-              <div>
-                <span className="brand-name">Desa Timbul</span>
-                <span className="brand-sub">Kec. Prambanan, Sleman</span>
-              </div>
+      <div className="container footer-inner">
+        {/* Brand */}
+        <div className="f-brand">
+          <Link to="/" className="f-logo">
+            <div className="f-ico">🏘️</div>
+            <div>
+              <span className="f-name">RT 004 / RW 007</span>
+              <span className="f-sub">Desa Timbul, Prambanan</span>
             </div>
-            <p className="footer-desc">
-              Website resmi Desa Timbul, Kecamatan Prambanan, Kabupaten Sleman,
-              Daerah Istimewa Yogyakarta. Melayani dengan sepenuh hati.
-            </p>
-            <div className="footer-sosmed">
-              <a href="#" aria-label="Facebook">📘</a>
-              <a href="#" aria-label="Instagram">📸</a>
-              <a href="#" aria-label="YouTube">▶️</a>
-              <a href="#" aria-label="WhatsApp">💬</a>
-            </div>
-          </div>
-
-          {/* Links */}
-          <div className="footer-links">
-            <h4>Navigasi</h4>
-            <ul>
-              <li><a href="#beranda">Beranda</a></li>
-              <li><a href="#profil">Profil Desa</a></li>
-              <li><a href="#layanan">Layanan</a></li>
-              <li><a href="#berita">Berita</a></li>
-              <li><a href="#galeri">Galeri</a></li>
-              <li><a href="#kontak">Kontak</a></li>
-            </ul>
-          </div>
-
-          <div className="footer-links">
-            <h4>Layanan Online</h4>
-            <ul>
-              <li><a href="#">Surat Keterangan</a></li>
-              <li><a href="#">Pengantar KTP/KK</a></li>
-              <li><a href="#">Izin Usaha</a></li>
-              <li><a href="#">Pengaduan Warga</a></li>
-              <li><a href="#">Info APBDes</a></li>
-            </ul>
-          </div>
-
-          <div className="footer-links">
-            <h4>Informasi</h4>
-            <ul>
-              <li><a href="#">Peraturan Desa</a></li>
-              <li><a href="#">APBDes 2026</a></li>
-              <li><a href="#">RPJM Desa</a></li>
-              <li><a href="#">Monografi Desa</a></li>
-              <li><a href="#">Pengumuman</a></li>
-            </ul>
+          </Link>
+          <p>Portal resmi warga RT 004 RW 007 Desa Timbul, Kecamatan Prambanan, Kabupaten Sleman, D.I. Yogyakarta.</p>
+          <div className="f-sosmed">
+            <a href="https://wa.me/628123456789" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">💬</a>
+            <a href="#" aria-label="Facebook">📘</a>
+            <a href="#" aria-label="Instagram">📸</a>
           </div>
         </div>
 
-        <div className="footer-bottom">
-          <p>© {year} Desa Timbul — Kecamatan Prambanan, Sleman, DIY. Hak cipta dilindungi.</p>
-          <div className="footer-bottom-links">
-            <a href="#">Kebijakan Privasi</a>
-            <a href="#">Syarat & Ketentuan</a>
+        {/* Nav */}
+        <div className="f-links">
+          <h4>Menu</h4>
+          <ul>
+            {[
+              { l:'Beranda',    to:'/' },
+              { l:'Profil RT',  to:'/profil' },
+              { l:'Kegiatan',   to:'/kegiatan' },
+              { l:'Pengumuman', to:'/pengumuman' },
+              { l:'Galeri',     to:'/galeri' },
+              { l:'Kontak',     to:'/kontak' },
+            ].map(x => <li key={x.to}><Link to={x.to}>{x.l}</Link></li>)}
+          </ul>
+        </div>
+
+        {/* Kontak */}
+        <div className="f-links">
+          <h4>Kontak Pengurus</h4>
+          <div className="f-kontak">
+            <p>🏘️ RT 004 / RW 007</p>
+            <p>📍 Desa Timbul, Prambanan, Sleman</p>
+            <a href="tel:08123456789">📱 Ketua: 0812-3456-7890</a>
+            <a href="https://wa.me/628123456789" target="_blank" rel="noopener noreferrer">
+              💬 WhatsApp RT 004
+            </a>
           </div>
+        </div>
+      </div>
+
+      <div className="f-bottom">
+        <div className="container f-bottom-inner">
+          <p>© {new Date().getFullYear()} RT 004 / RW 007 — Desa Timbul, Prambanan, Sleman</p>
         </div>
       </div>
     </footer>

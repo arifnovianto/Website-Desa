@@ -1,97 +1,92 @@
 import { useState, useEffect } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
 import './Navbar.css'
 
-const navLinks = [
-  { label: 'Beranda', href: '#beranda' },
-  { label: 'Profil Desa', href: '#profil' },
-  { label: 'Layanan', href: '#layanan' },
-  { label: 'Berita', href: '#berita' },
-  { label: 'Galeri', href: '#galeri' },
-  { label: 'Kontak', href: '#kontak' },
+const links = [
+  { label: 'Beranda',     to: '/' },
+  { label: 'Profil RT',   to: '/profil' },
+  { label: 'Kegiatan',    to: '/kegiatan' },
+  { label: 'Pengumuman',  to: '/pengumuman' },
+  { label: 'Galeri',      to: '/galeri' },
+  { label: 'Kontak',      to: '/kontak' },
 ]
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [activeLink, setActiveLink] = useState('#beranda')
+  const [scrolled,  setScrolled]  = useState(false)
+  const [menuOpen,  setMenuOpen]  = useState(false)
+  const { pathname } = useLocation()
+  const isHome = pathname === '/'
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const handleLinkClick = (href) => {
-    setActiveLink(href)
+  useEffect(() => {
+    window.scrollTo(0, 0)
     setMenuOpen(false)
-  }
+  }, [pathname])
+
+  const transparent = isHome && !scrolled
 
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <div className="container navbar-inner">
+    <nav className={`navbar${scrolled ? ' scrolled' : ''}${transparent ? ' transparent' : ''}`}>
+      <div className="container nav-inner">
         {/* Logo */}
-        <a href="#beranda" className="navbar-brand" onClick={() => handleLinkClick('#beranda')}>
-          <div className="brand-icon">
-            <span>🌿</span>
-          </div>
+        <NavLink to="/" className="brand">
+          <div className="brand-ico">🏘️</div>
           <div className="brand-text">
-            <span className="brand-name">Desa Timbul</span>
-            <span className="brand-sub">Kec. Prambanan, Sleman</span>
+            <span className="brand-name">RT 004 / RW 007</span>
+            <span className="brand-sub">Desa Timbul, Prambanan</span>
           </div>
-        </a>
+        </NavLink>
 
-        {/* Nav Links Desktop */}
-        <ul className="nav-links">
-          {navLinks.map(link => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className={`nav-link ${activeLink === link.href ? 'active' : ''}`}
-                onClick={() => handleLinkClick(link.href)}
+        {/* Desktop */}
+        <ul className="nav-list">
+          {links.map(l => (
+            <li key={l.to}>
+              <NavLink
+                to={l.to}
+                end={l.to === '/'}
+                className={({ isActive }) => 'nav-link' + (isActive ? ' active' : '')}
               >
-                {link.label}
-              </a>
+                {l.label}
+              </NavLink>
             </li>
           ))}
         </ul>
 
-        {/* CTA Button */}
-        <a href="#layanan" className="btn btn-primary navbar-cta">
-          Layanan Online
-        </a>
+        <NavLink to="/pengumuman" className="btn btn-primary nav-cta">
+          Pengumuman
+        </NavLink>
 
         {/* Hamburger */}
         <button
-          className={`hamburger ${menuOpen ? 'open' : ''}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
+          className={'hamburger' + (menuOpen ? ' open' : '')}
+          onClick={() => setMenuOpen(v => !v)}
+          aria-label="Buka menu"
+          aria-expanded={menuOpen}
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <span /><span /><span />
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
-        <ul>
-          {navLinks.map(link => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className={activeLink === link.href ? 'active' : ''}
-                onClick={() => handleLinkClick(link.href)}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-          <li>
-            <a href="#layanan" className="btn btn-primary mobile-cta" onClick={() => setMenuOpen(false)}>
-              Layanan Online
-            </a>
-          </li>
-        </ul>
+      {/* Mobile */}
+      <div className={'mobile-menu' + (menuOpen ? ' open' : '')}>
+        {links.map(l => (
+          <NavLink
+            key={l.to}
+            to={l.to}
+            end={l.to === '/'}
+            className={({ isActive }) => 'mob-link' + (isActive ? ' active' : '')}
+          >
+            {l.label}
+          </NavLink>
+        ))}
+        <NavLink to="/kontak" className="btn btn-primary mob-cta">
+          Hubungi Kami
+        </NavLink>
       </div>
     </nav>
   )
