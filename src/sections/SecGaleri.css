@@ -1,0 +1,85 @@
+.sec-galeri { background: var(--bg); }
+
+.sec-banner {
+  background: linear-gradient(135deg, #0d4a28, #1a6b3c);
+  padding: 56px 0 44px;
+}
+.sec-banner h2 { color: white; font-size: clamp(24px,3.5vw,36px); margin: 10px 0 10px; }
+.sec-banner p  { color: rgba(255,255,255,.72); font-size: 15px; }
+.label-white   { background: rgba(255,255,255,.15); color: rgba(255,255,255,.95); }
+
+.sec-body { padding: 48px 0 72px; }
+
+.filter-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.filter-btn {
+  padding: 7px 16px; border-radius: 100px;
+  border: 1.5px solid var(--border); background: white;
+  color: var(--text); font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all .2s; font-family: inherit;
+}
+.filter-btn:hover  { border-color: var(--primary); color: var(--primary); }
+.filter-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
+
+.galeri-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.galeri-card {
+  border-radius: var(--radius-lg); overflow: hidden;
+  cursor: pointer; position: relative; transition: all .3s;
+  border: 1px solid rgba(0,0,0,.05);
+}
+.galeri-card:hover { transform: scale(1.025); box-shadow: var(--shadow-lg); }
+.galeri-card:hover .gc-hover { opacity: 1; }
+
+.gc-thumb { height: 160px; display: flex; align-items: center; justify-content: center; }
+.gc-ico   { font-size: 56px; }
+.gc-info  { padding: 11px 14px; background: rgba(255,255,255,.88); }
+.gc-kat {
+  display: inline-block; margin-bottom: 4px;
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px;
+  color: var(--primary); background: var(--primary-light);
+  padding: 2px 8px; border-radius: 100px;
+}
+.gc-judul { font-size: 13px; font-weight: 700; color: var(--text-heading); margin: 0; }
+
+.gc-hover {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.42); backdrop-filter: blur(2px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .3s;
+}
+.gc-hover span {
+  color: white; font-size: 14px; font-weight: 600;
+  background: rgba(255,255,255,.14);
+  padding: 8px 16px; border-radius: 7px;
+  border: 1px solid rgba(255,255,255,.25);
+}
+
+/* Overlay + Modal */
+.overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,.6); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px; animation: fi .2s ease;
+}
+@keyframes fi { from { opacity:0 } to { opacity:1 } }
+.modal {
+  background: white; border-radius: var(--radius-lg);
+  max-width: 500px; width: 100%; overflow: hidden;
+  position: relative; animation: su .25s ease;
+}
+@keyframes su { from { transform: translateY(14px); opacity:0 } to { transform: none; opacity:1 } }
+.modal-x {
+  position: absolute; top: 10px; right: 10px;
+  width: 30px; height: 30px; border-radius: 50%;
+  border: none; background: rgba(0,0,0,.12); color: white;
+  font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  z-index: 2;
+}
+.modal-x:hover { background: rgba(0,0,0,.28); }
+.lb-img   { height: 220px; display: flex; align-items: center; justify-content: center; }
+.lb-ico   { font-size: 80px; }
+.lb-info  { padding: 18px 22px 22px; display: flex; flex-direction: column; gap: 6px; }
+.lb-info h3 { font-size: 18px; }
+.lb-info p  { font-size: 13px; color: var(--text-light); }
+
+@media (max-width: 768px) { .galeri-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .galeri-grid { grid-template-columns: 1fr; } }

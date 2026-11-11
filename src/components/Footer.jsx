@@ -1,5 +1,19 @@
-import { Link } from 'react-router-dom'
 import './Footer.css'
+
+function scrollTo(id) {
+  const el = document.getElementById(id)
+  if (!el) return
+  window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 68, behavior: 'smooth' })
+}
+
+const menu = [
+  { label:'Beranda',    id:'beranda' },
+  { label:'Profil RT',  id:'profil' },
+  { label:'Kegiatan',   id:'kegiatan' },
+  { label:'Pengumuman', id:'pengumuman' },
+  { label:'Galeri',     id:'galeri' },
+  { label:'Kontak',     id:'kontak' },
+]
 
 export default function Footer() {
   return (
@@ -7,13 +21,13 @@ export default function Footer() {
       <div className="container footer-inner">
         {/* Brand */}
         <div className="f-brand">
-          <Link to="/" className="f-logo">
+          <button className="f-logo" onClick={() => scrollTo('beranda')}>
             <div className="f-ico">🏘️</div>
             <div>
               <span className="f-name">RT 004 / RW 007</span>
               <span className="f-sub">Desa Timbul, Prambanan</span>
             </div>
-          </Link>
+          </button>
           <p>Portal resmi warga RT 004 RW 007 Desa Timbul, Kecamatan Prambanan, Kabupaten Sleman, D.I. Yogyakarta.</p>
           <div className="f-sosmed">
             <a href="https://wa.me/628123456789" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">💬</a>
@@ -22,18 +36,15 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Nav */}
+        {/* Menu */}
         <div className="f-links">
           <h4>Menu</h4>
           <ul>
-            {[
-              { l:'Beranda',    to:'/' },
-              { l:'Profil RT',  to:'/profil' },
-              { l:'Kegiatan',   to:'/kegiatan' },
-              { l:'Pengumuman', to:'/pengumuman' },
-              { l:'Galeri',     to:'/galeri' },
-              { l:'Kontak',     to:'/kontak' },
-            ].map(x => <li key={x.to}><Link to={x.to}>{x.l}</Link></li>)}
+            {menu.map(m => (
+              <li key={m.id}>
+                <button onClick={() => scrollTo(m.id)}>{m.label}</button>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -52,7 +63,7 @@ export default function Footer() {
       </div>
 
       <div className="f-bottom">
-        <div className="container f-bottom-inner">
+        <div className="container">
           <p>© {new Date().getFullYear()} RT 004 / RW 007 — Desa Timbul, Prambanan, Sleman</p>
         </div>
       </div>

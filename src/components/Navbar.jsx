@@ -1,65 +1,83 @@
 import { useState, useEffect } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
 import './Navbar.css'
 
 const links = [
-  { label: 'Beranda',     to: '/' },
-  { label: 'Profil RT',   to: '/profil' },
-  { label: 'Kegiatan',    to: '/kegiatan' },
-  { label: 'Pengumuman',  to: '/pengumuman' },
-  { label: 'Galeri',      to: '/galeri' },
-  { label: 'Kontak',      to: '/kontak' },
+  { label: 'Beranda',    id: 'beranda' },
+  { label: 'Profil RT',  id: 'profil' },
+  { label: 'Kegiatan',   id: 'kegiatan' },
+  { label: 'Pengumuman', id: 'pengumuman' },
+  { label: 'Galeri',     id: 'galeri' },
+  { label: 'Kontak',     id: 'kontak' },
 ]
+
+function scrollTo(id) {
+  const el = document.getElementById(id)
+  if (!el) return
+  const offset = 68 // tinggi navbar
+  const top = el.getBoundingClientRect().top + window.scrollY - offset
+  window.scrollTo({ top, behavior: 'smooth' })
+}
 
 export default function Navbar() {
   const [scrolled,  setScrolled]  = useState(false)
   const [menuOpen,  setMenuOpen]  = useState(false)
-  const { pathname } = useLocation()
-  const isHome = pathname === '/'
+  const [activeId,  setActiveId]  = useState('beranda')
 
+  // detect scroll & active section
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10)
-    window.addEventListener('scroll', onScroll)
+    const onScroll = () => {
+      setScrolled(window.scrollY > 10)
+
+      // tentukan section yang sedang terlihat
+      const offsets = links.map(l => {
+        const el = document.getElementById(l.id)
+        if (!el) return { id: l.id, top: Infinity }
+        return { id: l.id, top: Math.abs(el.getBoundingClientRect().top - 80) }
+      })
+      const nearest = offsets.reduce((a, b) => (a.top < b.top ? a : b))
+      setActiveId(nearest.id)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
+  const handleClick = (id) => {
+    scrollTo(id)
     setMenuOpen(false)
-  }, [pathname])
+  }
 
+  const isHome = activeId === 'beranda'
   const transparent = isHome && !scrolled
 
   return (
     <nav className={`navbar${scrolled ? ' scrolled' : ''}${transparent ? ' transparent' : ''}`}>
       <div className="container nav-inner">
         {/* Logo */}
-        <NavLink to="/" className="brand">
+        <button className="brand" onClick={() => handleClick('beranda')}>
           <div className="brand-ico">🏘️</div>
           <div className="brand-text">
             <span className="brand-name">RT 004 / RW 007</span>
             <span className="brand-sub">Desa Timbul, Prambanan</span>
           </div>
-        </NavLink>
+        </button>
 
-        {/* Desktop */}
+        {/* Desktop links */}
         <ul className="nav-list">
           {links.map(l => (
-            <li key={l.to}>
-              <NavLink
-                to={l.to}
-                end={l.to === '/'}
-                className={({ isActive }) => 'nav-link' + (isActive ? ' active' : '')}
+            <li key={l.id}>
+              <button
+                className={'nav-link' + (activeId === l.id ? ' active' : '')}
+                onClick={() => handleClick(l.id)}
               >
                 {l.label}
-              </NavLink>
+              </button>
             </li>
           ))}
         </ul>
 
-        <NavLink to="/pengumuman" className="btn btn-primary nav-cta">
+        <button className="btn btn-primary nav-cta" onClick={() => handleClick('pengumuman')}>
           Pengumuman
-        </NavLink>
+        </button>
 
         {/* Hamburger */}
         <button
@@ -72,21 +90,20 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile */}
+      {/* Mobile menu */}
       <div className={'mobile-menu' + (menuOpen ? ' open' : '')}>
         {links.map(l => (
-          <NavLink
-            key={l.to}
-            to={l.to}
-            end={l.to === '/'}
-            className={({ isActive }) => 'mob-link' + (isActive ? ' active' : '')}
+          <button
+            key={l.id}
+            className={'mob-link' + (activeId === l.id ? ' active' : '')}
+            onClick={() => handleClick(l.id)}
           >
             {l.label}
-          </NavLink>
+          </button>
         ))}
-        <NavLink to="/kontak" className="btn btn-primary mob-cta">
+        <button className="btn btn-primary mob-cta" onClick={() => handleClick('kontak')}>
           Hubungi Kami
-        </NavLink>
+        </button>
       </div>
     </nav>
   )

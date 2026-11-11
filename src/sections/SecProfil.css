@@ -1,0 +1,89 @@
+.sec-profil { background: var(--bg-soft); }
+
+.sec-banner {
+  background: linear-gradient(135deg, #0d4a28, #1a6b3c);
+  padding: 56px 0 44px;
+}
+.sec-banner h2 { color: white; font-size: clamp(24px,3.5vw,36px); margin: 10px 0 10px; }
+.sec-banner p  { color: rgba(255,255,255,.72); font-size: 15px; }
+.label-white   { background: rgba(255,255,255,.15); color: rgba(255,255,255,.95); }
+
+.sec-body { padding: 56px 0 72px; }
+
+.pr-blok { margin-bottom: 52px; }
+.pr-blok:last-child { margin-bottom: 0; }
+
+.blok-title {
+  font-size: 20px; font-weight: 800; color: var(--text-heading);
+  margin-bottom: 20px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--primary-light);
+}
+
+/* Info tabel */
+.info-tabel {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; max-width: 580px;
+}
+.info-row {
+  background: white; display: flex;
+  justify-content: space-between; align-items: center;
+  padding: 13px 20px; gap: 16px;
+}
+.info-row:hover { background: var(--bg-soft); }
+.info-key { font-size: 13px; color: var(--text-light); font-weight: 500; }
+.info-val { font-size: 14px; font-weight: 700; color: var(--text-heading); }
+
+/* Pengurus */
+.pengurus-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.pengurus-card {
+  background: white; border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 16px;
+  display: flex; gap: 12px; align-items: center;
+  transition: all .2s;
+}
+.pengurus-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.pengurus-card.utama {
+  background: var(--primary-light); border-color: var(--primary);
+  grid-column: 1 / -1; max-width: 380px;
+}
+
+.avatar {
+  width: 42px; height: 42px; min-width: 42px;
+  background: var(--primary); color: white;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700;
+}
+.avatar-lg { width: 52px; height: 52px; min-width: 52px; font-size: 17px; }
+
+.p-info { display: flex; flex-direction: column; gap: 2px; }
+.p-info strong { font-size: 14px; font-weight: 700; color: var(--text-heading); }
+.p-info span   { font-size: 12px; color: var(--text-light); }
+.p-hp { font-size: 12px; color: var(--primary); font-weight: 600; text-decoration: none; }
+.p-hp:hover { color: var(--primary-dark); }
+
+/* Program */
+.program-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 11px; }
+.program-card {
+  background: white; border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 14px 16px;
+  display: flex; gap: 12px; align-items: flex-start;
+  transition: all .2s;
+}
+.program-card:hover { border-color: var(--primary); }
+.prog-ico  { font-size: 24px; flex-shrink: 0; }
+.prog-body { display: flex; flex-direction: column; gap: 2px; }
+.prog-body strong  { font-size: 13px; font-weight: 700; color: var(--text-heading); }
+.prog-jadwal { font-size: 12px; color: var(--primary); font-weight: 600; }
+.prog-ket    { font-size: 12px; color: var(--text-light); }
+
+@media (max-width: 768px) {
+  .info-tabel  { grid-template-columns: 1fr; }
+  .pengurus-grid { grid-template-columns: 1fr 1fr; }
+  .pengurus-card.utama { max-width: 100%; }
+  .program-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .pengurus-grid { grid-template-columns: 1fr; }
+}

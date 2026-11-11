@@ -1,25 +1,24 @@
-import { Routes, Route } from 'react-router-dom'
-import Navbar  from './components/Navbar'
-import Footer  from './components/Footer'
-import Beranda from './pages/Beranda'
-import Profil  from './pages/Profil'
-import Kegiatan from './pages/Kegiatan'
-import Pengumuman from './pages/Pengumuman'
-import Galeri  from './pages/Galeri'
-import Kontak  from './pages/Kontak'
+import Navbar      from './components/Navbar'
+import Footer      from './components/Footer'
+import SecBeranda  from './sections/SecBeranda'
+import SecProfil   from './sections/SecProfil'
+import SecKegiatan from './sections/SecKegiatan'
+import SecPengumuman from './sections/SecPengumuman'
+import SecGaleri   from './sections/SecGaleri'
+import SecKontak   from './sections/SecKontak'
 
 export default function App() {
   return (
     <>
       <Navbar />
-      <Routes>
-        <Route path="/"           element={<Beranda />}    />
-        <Route path="/profil"     element={<Profil />}     />
-        <Route path="/kegiatan"   element={<Kegiatan />}   />
-        <Route path="/pengumuman" element={<Pengumuman />} />
-        <Route path="/galeri"     element={<Galeri />}     />
-        <Route path="/kontak"     element={<Kontak />}     />
-      </Routes>
+      <main>
+        <SecBeranda />
+        <SecProfil />
+        <SecKegiatan />
+        <SecPengumuman />
+        <SecGaleri />
+        <SecKontak />
+      </main>
       <Footer />
     </>
   )
